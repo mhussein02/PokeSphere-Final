@@ -32,9 +32,14 @@ jobs:
 
       - name: Build
         run: |
-          npm run build
-          # SPA fallback for React Router
+          npm run build -- --base=/PokeSphere-Final/
+          # SPA fallback for React Router routes
           cp dist/index.html dist/404.html
+
+      - name: Verify built asset paths
+        run: |
+          grep -n "assets/index" dist/index.html || true
+          ls -la dist/assets | head -n 20
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
